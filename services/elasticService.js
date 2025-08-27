@@ -3,7 +3,7 @@ import csv from "csv-parser";
 import { ollama } from "../config/ollama.js";
 import { es, INDEX_NAME } from "../config/elastic.js";
 
-const CSV_PATH = "../real_estate_main.csv";
+const CSV_PATH = "real_estate_main.csv";
 
 export async function createIndex() {
   const exists = await es.indices.exists({ index: INDEX_NAME });
