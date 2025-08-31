@@ -7,6 +7,11 @@ services:
       - discovery.type=single-node
       - ES_JAVA_OPTS=-Xms1g -Xmx1g
       - xpack.security.enabled=false
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
     ports:
       - "9200:9200"
     volumes:
@@ -19,6 +24,7 @@ services:
       - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
+    mem_limit: 2g
 
   node-app:
     build: .  # tells Compose: "use the Dockerfile here"
@@ -30,6 +36,7 @@ services:
       - ollama
     environment:
       - ES_HOST=http://elasticsearch:9200
+      - OLLAMA_API_BASE=http://ollama:11434
       - OLLAMA_HOST=http://ollama:11434
     volumes:
       - .:/usr/src/app

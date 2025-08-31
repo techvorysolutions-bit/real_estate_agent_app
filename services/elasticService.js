@@ -8,6 +8,8 @@ const CSV_PATH = "real_estate_main.csv";
 export async function createIndex() {
   const exists = await es.indices.exists({ index: INDEX_NAME });
 
+  console.log("Index exists check:", exists);
+
   if (!exists) {
     await es.indices.create({
       index: INDEX_NAME,
@@ -27,9 +29,9 @@ export async function createIndex() {
         },
       },
     });
-    console.log(`✅ Index ${INDEX_NAME} created`);
+    console.log(`Index ${INDEX_NAME} created`);
   } else {
-    console.log(`ℹ️ Index ${INDEX_NAME} already exists`);
+    console.log(`Index ${INDEX_NAME} already exists`);
   }
 
   return exists;
