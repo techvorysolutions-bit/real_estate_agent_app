@@ -3,6 +3,7 @@ import { semanticSearch } from "./searchService.js";
 
 export async function answerQuery(query) {
   const docs = await semanticSearch(query, 5);
+  const sanitizedDocs = docs.map(({ embedding,summary, ...rest }) => rest);
   const context = docs.map((d) => `- ${d.summary}`).join("\n");
 
 //   const prompt = `
@@ -22,7 +23,6 @@ export async function answerQuery(query) {
 
   return {
     query,
-    context,
-    answer: context       // or just return context directly
+    data: sanitizedDocs
   };
 }

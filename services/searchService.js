@@ -25,3 +25,19 @@ export async function semanticSearch(query, top_k = 5) {
 
   return results.hits.hits.map((hit) => hit._source);
 }
+
+export async function getPropertyById(propertyId) {
+  const result = await es.search({
+    index: INDEX_NAME,
+    size: 1,
+    query: {
+      term: { propertyId: propertyId },
+    },
+  });
+
+  if (result.hits.hits.length > 0) {
+    const { embedding, ...sanitizedSource } = result.hits.hits[0]._source;
+    return sanitizedSource;
+  }
+  return null;
+}

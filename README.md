@@ -5,3 +5,8 @@
 
 Curl to post a query:
 curl -X POST http://localhost:3000/api/query   -H "Content-Type: application/json"   -d '{"query":"Give me 3BHK flats"}'
+
+Curl to get property by id:
+curl --location 'http://localhost:3000/api/property/1' \
+--header 'Content-Type: application/json' \
+--data ''

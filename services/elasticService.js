@@ -16,6 +16,7 @@ export async function createIndex() {
       body: {
         mappings: {
           properties: {
+            propertyId: { type: "long" },
             name: { type: "text" },
             summary: { type: "text" },
             price: { type: "float" },
@@ -55,6 +56,7 @@ export async function indexData() {
           const vector = response.embedding;
 
           const doc = {
+            propertyId: row.PropId,
             name: row.Name,
             summary: summaryText,
             price: parseFloat(row.Price),
@@ -65,7 +67,7 @@ export async function indexData() {
 
           await es.index({ index: INDEX_NAME, document: doc });
         }
-        console.log("✅ CSV data indexed successfully!");
+        console.log("CSV data indexed successfully!");
         resolve();
       });
   });
